@@ -1,5 +1,5 @@
 import numpy as np
-import pandas as pd
+#import pandas as pd
 
 #THIS IS JUST TO COMPILE THE DATA FILE INTO A NUMPY ARRAY OF OBJECTS. IF YOU FIND AN EASIER WAY TO DO THIS LET ME KNOW OR JUST CHANGE IT LMAO
 def makeArr(file):
