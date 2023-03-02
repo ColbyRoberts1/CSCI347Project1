@@ -1,32 +1,15 @@
 import numpy as np
-#import pandas as pd
+import pandas as pd
 
-#THIS IS JUST TO COMPILE THE DATA FILE INTO A NUMPY ARRAY OF OBJECTS. IF YOU FIND AN EASIER WAY TO DO THIS LET ME KNOW OR JUST CHANGE IT LMAO
-def makeArr(file):
-    fileLines = file.readlines()
-    arr = np.empty((len(fileLines)-1,9))
-    lineCounter = 0
-    carModel = 0
-    while lineCounter < len(fileLines)-1 :
-        lineSplit = fileLines[lineCounter].split()
-        wordCounter = 0
-        while wordCounter < 9:
-            #THIS IS FOR THE PURPOSE OF LABEL-ENCODING THE CAR MODEL NAME. BECAUSE THEY ARE ALL DIFFERENT IT WILL JUST BE ITERATING BY ONE EACH TIME
-            if wordCounter == 8:
-                arr[lineCounter, wordCounter] = carModel
-                carModel += 1
-                wordCounter = 9
-            else:
-                if lineSplit[wordCounter] == '?':
-                    arr[lineCounter, wordCounter] = 0
-                else: 
-                    arr[lineCounter, wordCounter] = lineSplit[wordCounter]
-                wordCounter += 1
-        lineCounter += 1
-    return arr          
-        
-def findMean(arr):
-    
-with open('auto-mpg.data', 'r') as file:
-    data = makeArr(file)
-    print(data)
+# Loads the data into a Panda's dataframe, sets column names,
+def getData():
+    df = pd.read_csv(
+        "./auto-mpg.csv", 
+        names=["MPG", "Cylinders", "Displacement", "Horsepower", "Weight", "Acceleration", "Model Year", "Origin", "Car Make/Model"], 
+        doublequote=True,
+    )
+    df["Displacement"] = df["Displacement"].astype(float)
+    return df
+
+if __name__ == '__main__':
+    getData()
