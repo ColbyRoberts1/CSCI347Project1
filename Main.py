@@ -26,7 +26,31 @@ def makeArr(file):
     return arr          
         
 def findMean(arr):
-    
+    pass
+
+def rangeNorm(arr):
+    minimum = arr.min()
+    maximum = arr.max()
+    return (arr - minimum)/(maximum - minimum)
+
+def standardDeviation(arr):
+    x = 1/(len(arr) - 1)
+    total = 0
+    for i in range(len(arr)):
+        total += (arr[i] - (arr))**2
+    return np.sqrt(x*total)
+
+def vectorMean(arr):
+    return arr.sum(axis=0) / arr.shape[0]
+
+def standNorm(arr):
+    vector_mean = vectorMean(arr)
+    return (arr - vector_mean)/standardDeviation(arr)
+
 with open('auto-mpg.data', 'r') as file:
     data = makeArr(file)
     print(data)
+    print(rangeNorm(data))
+    print(standNorm(data))
+
+
