@@ -13,6 +13,10 @@ def label_encode(arr: np.ndarray) -> np.ndarray:
         result[i] = encoder.fit_transform(col)
     return result
 
+# Computes the multivariate mean of a numpy array
+def mean(arr: np.ndarray):
+    return arr.sum(axis = 0)/arr.shape[0]
+    
 # Computes the sample covariance of two numpy arrays
 def sample_covariance(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:
     return np.cov(arr1, arr2)[0][1]

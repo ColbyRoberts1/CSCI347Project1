@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
-from utils import get_data, get_prepared_data, sample_covariance
+from utils import get_data, get_prepared_data, sample_covariance, mean
 
 @dataclass
 class Comparison:
@@ -14,6 +14,10 @@ class Comparison:
 def report():
     # Dataset initialization
     df = get_prepared_data()
+    
+    print("What is the multivariate mean of the dataset?")
+    print("Answer:", mean(df))
+    print()
 
     # How many pairs of features have correlation greater than or equal to 0.5?
     matches_found = calc_matching_pairs_for_threshold(df, Comparison(True, True, 0.5))
