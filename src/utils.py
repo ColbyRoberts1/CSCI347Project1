@@ -16,10 +16,23 @@ def label_encode(arr: np.ndarray) -> np.ndarray:
 # Computes the multivariate mean of a numpy array
 def mean(arr: np.ndarray):
     return arr.sum(axis = 0)/arr.shape[0]
+
+def variance(arr: np.ndarray):
+    x = 1/(len(arr) - 1)
+    total = 0
+    for i in range(len(arr)):
+        total += (arr[i] - (arr))**2
+    return total * x
     
 # Computes the sample covariance of two numpy arrays
 def sample_covariance(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:
-    return np.cov(arr1, arr2)[0][1]
+    arr1mean = mean(arr1)
+    arr2mean = mean(arr2)
+    x = 1/(len(arr1) - 1)
+    total = 0
+    for i in range(len(arr1)):
+        total += (arr1[i] - arr1mean) *(arr2[i] - arr2mean)
+    return total * x
 
 # Computes the correlation coefficient of two numpy arrays
 def correlation(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:

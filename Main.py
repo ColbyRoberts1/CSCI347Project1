@@ -26,8 +26,7 @@ def makeArr(file):
     return arr          
         
 def findMean(arr):
-    mean = arr.sum(axis = 0)/arr.shape[0]
-    return mean
+    return arr.sum(axis = 0)/arr.shape[0]
     
 
 def rangeNorm(arr):
