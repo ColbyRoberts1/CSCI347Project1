@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-from calcs import correlation_coefficient, label_encode, sample_covariance, sample_variance
 from sklearn.preprocessing import LabelEncoder
+from statistics import variance as uvar
 
 # Computes the label encoding of arr
 # Assumes arr is a two dimensional numpy array of categorical data
@@ -15,15 +15,14 @@ def label_encode(arr: np.ndarray) -> np.ndarray:
     return result
 
 # Computes the multivariate mean of a numpy array
-def mean(arr: np.ndarray):
-    return arr.sum(axis = 0)/arr.shape[0]
+def mean(arr: np.ndarray) -> np.ndarray:
+    return arr.sum(axis = 0)/len(arr)
 
-def variance(arr: np.ndarray):
-    x = 1/(len(arr) - 1)
+def variance(arr: np.ndarray) -> np.float64:
     total = 0
     for i in range(len(arr)):
-        total += (arr[i] - (arr))**2
-    return total * x
+        total += (arr[i] - mean(arr))**2
+    return total / (len(arr) - 1)
 
 def standardDeviation(arr: np.ndarray):
     x = 1/(len(arr) - 1)
@@ -48,10 +47,11 @@ def correlation(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:
 
 # Computes the total variance for a two dimensional array
 # Assumes arr[0] is an attribute vector
-def total_variance(arr: np.ndarray) -> np.float64:
+def total_variance(arr: pd.DataFrame) -> np.float64:
     total_variance = 0
-    for attr in arr:
-        total_variance += sample_variance(attr)
+    for col in arr.columns:
+        print(arr[col])
+        total_variance += variance(arr[col].array)
     return total_variance
 
 # Loads the data into a Panda's dataframe, sets column names,
@@ -82,12 +82,9 @@ def get_prepared_data():
 if __name__ == "__main__":
     # Test inputs
     THRESHOLD = 0.01
-    arr1 = np.array([1, 2, 3, 4, 5, 6])
-    arr2 = np.array([10, 20, 27, 20, 18, 6])
+    arr1 = np.array([1, 2, 3, 4, 5, 6], dtype=np.float64)
+    arr2 = np.array([10, 20, 27, 20, 18, 6], dtype=np.float64)
     categorical = np.array([["A", "C", "B", "A", "B"], ["red", "blue", "red", "green", "purple"]])
-
-    # Test mean
-    
 
     # Test label encoding
     expected_labels = np.array([[0, 2, 1, 0, 1], [3, 0, 3, 1, 2.]], dtype=int)
@@ -111,9 +108,19 @@ if __name__ == "__main__":
         print("Sample covariance test failed!")
         print(f"    covariance calculated: {covar}")
 
+    # Test correlation
+    corr = correlation(arr1, arr2)
+    if (corr + 0.23 < THRESHOLD):
+        print("Correlation test passed!")
+    else:
+        print("Correlation test failed!")
+        print(f"    correlation calculated: {corr}")
+
     # Test total variance
-    expected_variance = 61.26666666666667
-    mat = np.array([arr1, arr2])
+    mat = pd.DataFrame()
+    mat["col1"] = pd.Series(arr1, dtype=np.float64)
+    mat["col2"] = pd.Series(arr2, dtype=np.float64)
+    expected_variance = uvar(arr1) + uvar(arr2)
     calculated_variance = total_variance(mat)
     if calculated_variance - expected_variance < THRESHOLD:
         print("Total variance test passed!")

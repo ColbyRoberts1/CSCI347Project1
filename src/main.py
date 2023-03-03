@@ -1,8 +1,7 @@
 from dataclasses import dataclass
 
-import numpy as np
 import pandas as pd
-from utils import get_prepared_data, sample_covariance, mean
+from utils import get_prepared_data, sample_covariance, mean, total_variance
 
 @dataclass
 class Comparison:
@@ -32,14 +31,14 @@ def report():
     print()
 
     # What is the total variance of the data?
-    calculated_variance = total_variance(df.v)
+    calculated_variance = total_variance(df)
     print("What is the total variance of the data?")
     print("Answer:", calculated_variance)
     print()
 
     # What is the total variance of the data, restricted to the five features 
     # that have the greatest sample variance?
-    calculated_variance_five = total_variance(df.v)
+    calculated_variance_five = total_variance(df)
     print("What is the total variance of the data, restricted to the five features that have the greatest sample variance?")
     print("Answer:", calculated_variance_five)
     print()
