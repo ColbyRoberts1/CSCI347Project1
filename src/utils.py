@@ -69,7 +69,7 @@ def covarianceMatrix(arr):
                 covarMatrix[col][row] = variance(arr.iloc[:, col])
             else:
                 covarMatrix[col][row] = sample_covariance(arr.iloc[:, col], arr.iloc[:, row])
-    return covarianceMatrix
+    return covarMatrix
 
 
 # Loads and prepares the dataset
