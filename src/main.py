@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
-from utils import get_data, get_prepared_data, sample_covariance, mean
+from utils import get_data, get_prepared_data, sample_covariance, mean, covarianceMatrix
 
 @dataclass
 class Comparison:
@@ -31,6 +31,8 @@ def report():
     print("How many pairs of features have negative sample covariance?")
     print("Answer:", matches_found)
     print()
+    
+    print(covarianceMatrix(df))
 
 def calc_matching_pairs_for_threshold(df: pd.DataFrame, comparison: Comparison) -> int:
     matches = 0

@@ -15,7 +15,6 @@ def label_encode(arr: np.ndarray) -> np.ndarray:
 
 # Computes the multivariate mean of a numpy array
 def mean(arr: np.ndarray):
-    arr = arr.to_numpy()
     return arr.sum(axis = 0)/arr.shape[0]
 
 # Computes the variance of a numpy array
@@ -23,8 +22,9 @@ def variance(arr: np.ndarray):
     x = 1/(len(arr) - 1)
     total = 0
     for i in range(len(arr)):
-        total += (arr[i] - (arr))**2
-    return total * x
+        total += (arr[i] - mean(arr))**2
+    var = (total * x)
+    return var
 
 # Computes the standard deviation of a numpy array
 def standardDeviation(arr: np.ndarray):
@@ -58,6 +58,19 @@ def get_data() -> pd.DataFrame:
     # Correct the datatype of Displacement
     df["Displacement"] = df["Displacement"].astype(float)
     return df
+
+# Computes and returns the covariance matrix
+def covarianceMatrix(arr):
+    arrSize = np.size(arr, 1)
+    covarMatrix = np.zeros((arrSize, arrSize))
+    for row in range(len(covarMatrix)):
+        for col in range(len(covarMatrix)):
+            if row == col:
+                covarMatrix[col][row] = variance(arr.iloc[:, col])
+            else:
+                covarMatrix[col][row] = sample_covariance(arr.iloc[:, col], arr.iloc[:, row])
+    return covarianceMatrix
+
 
 # Loads and prepares the dataset
 def get_prepared_data():
