@@ -28,7 +28,7 @@ def standardDeviation(arr: np.ndarray):
     x = 1/(len(arr) - 1)
     total = 0
     for i in range(len(arr)):
-        total += (arr[i] - (arr))**2
+        total += (arr[i] - mean(arr))**2
     return np.sqrt(x*total)
     
 # Computes the sample covariance of two numpy arrays
@@ -76,6 +76,9 @@ if __name__ == "__main__":
     arr1 = np.array([1, 2, 3, 4, 5, 6])
     arr2 = np.array([10, 20, 27, 20, 18, 6])
     categorical = np.array([["A", "C", "B", "A", "B"], ["red", "blue", "red", "green", "purple"]])
+
+    # Test mean
+    
 
     # Test label encoding
     expected_labels = np.array([[0, 2, 1, 0, 1], [3, 0, 3, 1, 2.]], dtype=int)
