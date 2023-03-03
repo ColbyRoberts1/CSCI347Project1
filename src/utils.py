@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
 # Computes the label encoding of arr
@@ -9,17 +10,44 @@ def label_encode(arr: np.ndarray) -> np.ndarray:
     result = np.zeros(arr.shape, dtype=int)
     # Label encode each column
     for i, col in enumerate(arr):
-        print(i, col)
         result[i] = encoder.fit_transform(col)
     return result
 
 # Computes the sample covariance of two numpy arrays
-def sample_covariance(arr1: np.ndarray, arr2: np.ndarray) -> np.ndarray:
+def sample_covariance(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:
     return np.cov(arr1, arr2)[0][1]
 
 # Computes the correlation coefficient of two numpy arrays
-def correlation(arr1: np.ndarray, arr2: np.ndarray) -> np.ndarray:
+def correlation(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:
     return np.corrcoef(arr1, arr2)[0][1]
+
+# Loads the data into a Panda's dataframe, sets column names,
+def get_data() -> pd.DataFrame:
+    # Load and format data as a dataframe
+    df = pd.read_csv(
+        "./auto-mpg.csv", 
+        names=["MPG", "Cylinders", "Displacement", "Horsepower", "Weight", "Acceleration", "Model Year", "Origin", "Car Make/Model"], 
+    )
+    # Correct the datatype of Displacement
+    df["Displacement"] = df["Displacement"].astype(float)
+    return df
+
+# Loads and prepares the dataset
+def get_prepared_data():
+    df = get_data()
+
+    # Label encode df
+    car_name_arr = np.array([df["Car Make/Model"].array])
+    df["Car Make/Model"] = pd.Series(label_encode(car_name_arr)[0], dtype=int)
+
+    # Fill missing attributes
+    for col in df.columns:
+        if df[col].dtype == str:
+            continue
+        avg = np.mean(df[col])
+        df[col].fillna(value=avg, inplace=True)
+    
+    return df
 
 if __name__ == "__main__":
     # Test inputs
