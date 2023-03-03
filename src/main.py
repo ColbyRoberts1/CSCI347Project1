@@ -31,8 +31,6 @@ def report():
     print("How many pairs of features have negative sample covariance?")
     print("Answer:", matches_found)
     print()
-    
-    print(covarianceMatrix(df))
 
 def calc_matching_pairs_for_threshold(df: pd.DataFrame, comparison: Comparison) -> int:
     matches = 0
