@@ -15,8 +15,10 @@ def label_encode(arr: np.ndarray) -> np.ndarray:
 
 # Computes the multivariate mean of a numpy array
 def mean(arr: np.ndarray):
+    arr = arr.to_numpy()
     return arr.sum(axis = 0)/arr.shape[0]
 
+# Computes the variance of a numpy array
 def variance(arr: np.ndarray):
     x = 1/(len(arr) - 1)
     total = 0
@@ -24,6 +26,7 @@ def variance(arr: np.ndarray):
         total += (arr[i] - (arr))**2
     return total * x
 
+# Computes the standard deviation of a numpy array
 def standardDeviation(arr: np.ndarray):
     x = 1/(len(arr) - 1)
     total = 0

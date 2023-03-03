@@ -15,8 +15,10 @@ def report():
     # Dataset initialization
     df = get_prepared_data()
     
+    # What is the multivariate mean of the numerical data matrix (where categorical data  have been converted to numerical values)?
     print("What is the multivariate mean of the dataset?")
-    print("Answer:", mean(df))
+    print("Answer:") 
+    print(mean(df))
     print()
 
     # How many pairs of features have correlation greater than or equal to 0.5?
