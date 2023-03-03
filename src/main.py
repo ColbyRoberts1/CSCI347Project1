@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
-from utils import get_data, get_prepared_data, sample_covariance, mean
+from utils import get_prepared_data, sample_covariance, mean
 
 @dataclass
 class Comparison:
@@ -29,6 +29,19 @@ def report():
     matches_found = calc_matching_pairs_for_threshold(df, Comparison(False, False, 0))
     print("How many pairs of features have negative sample covariance?")
     print("Answer:", matches_found)
+    print()
+
+    # What is the total variance of the data?
+    calculated_variance = total_variance(df.v)
+    print("What is the total variance of the data?")
+    print("Answer:", calculated_variance)
+    print()
+
+    # What is the total variance of the data, restricted to the five features 
+    # that have the greatest sample variance?
+    calculated_variance_five = total_variance(df.v)
+    print("What is the total variance of the data, restricted to the five features that have the greatest sample variance?")
+    print("Answer:", calculated_variance_five)
     print()
 
 def calc_matching_pairs_for_threshold(df: pd.DataFrame, comparison: Comparison) -> int:

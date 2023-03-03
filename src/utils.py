@@ -1,10 +1,11 @@
 import numpy as np
 import pandas as pd
+from calcs import correlation_coefficient, label_encode, sample_covariance, sample_variance
 from sklearn.preprocessing import LabelEncoder
 
 # Computes the label encoding of arr
 # Assumes arr is a two dimensional numpy array of categorical data
-# Assumes arr[0] is a column
+# Assumes arr[0] is an attribute vector
 def label_encode(arr: np.ndarray) -> np.ndarray:
     encoder = LabelEncoder()
     result = np.zeros(arr.shape, dtype=int)
@@ -44,6 +45,14 @@ def sample_covariance(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:
 # Computes the correlation coefficient of two numpy arrays
 def correlation(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:
     return sample_covariance(arr1, arr2)/(standardDeviation(arr1) * standardDeviation(arr2))
+
+# Computes the total variance for a two dimensional array
+# Assumes arr[0] is an attribute vector
+def total_variance(arr: np.ndarray) -> np.float64:
+    total_variance = 0
+    for attr in arr:
+        total_variance += sample_variance(attr)
+    return total_variance
 
 # Loads the data into a Panda's dataframe, sets column names,
 def get_data() -> pd.DataFrame:
@@ -102,10 +111,13 @@ if __name__ == "__main__":
         print("Sample covariance test failed!")
         print(f"    covariance calculated: {covar}")
 
-    # Test correlation coefficient
-    corr = correlation(arr1, arr2)
-    if (corr + 0.23 < THRESHOLD):
-        print("Correlation coefficient test passed!")
+    # Test total variance
+    expected_variance = 61.26666666666667
+    mat = np.array([arr1, arr2])
+    calculated_variance = total_variance(mat)
+    if calculated_variance - expected_variance < THRESHOLD:
+        print("Total variance test passed!")
     else:
-        print("Correlation coefficient test failed!")
-        print(f"    correlation calculated: {corr}")
+        print("Total variance test failed!")
+        print(f"    expected: {expected_variance}")
+        print(f"    actual: {calculated_variance}")
