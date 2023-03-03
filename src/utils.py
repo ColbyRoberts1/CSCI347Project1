@@ -59,18 +59,15 @@ def get_data() -> pd.DataFrame:
 # Loads and prepares the dataset
 def get_prepared_data():
     df = get_data()
-
     # Label encode df
     car_name_arr = np.array([df["Car Make/Model"].array])
     df["Car Make/Model"] = pd.Series(label_encode(car_name_arr)[0], dtype=int)
-
     # Fill missing attributes
     for col in df.columns:
         if df[col].dtype == str:
             continue
         avg = np.mean(df[col])
         df[col].fillna(value=avg, inplace=True)
-    
     return df
 
 if __name__ == "__main__":
