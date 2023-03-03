@@ -22,7 +22,7 @@ def correlation(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:
     return np.corrcoef(arr1, arr2)[0][1]
 
 # Loads the data into a Panda's dataframe, sets column names,
-def get_data():
+def get_data() -> pd.DataFrame:
     # Load and format data as a dataframe
     df = pd.read_csv(
         "./auto-mpg.csv", 
@@ -30,6 +30,23 @@ def get_data():
     )
     # Correct the datatype of Displacement
     df["Displacement"] = df["Displacement"].astype(float)
+    return df
+
+# Loads and prepares the dataset
+def get_prepared_data():
+    df = get_data()
+
+    # Label encode df
+    car_name_arr = np.array([df["Car Make/Model"].array])
+    df["Car Make/Model"] = pd.Series(label_encode(car_name_arr)[0], dtype=int)
+
+    # Fill missing attributes
+    for col in df.columns:
+        if df[col].dtype == str:
+            continue
+        avg = np.mean(df[col])
+        df[col].fillna(value=avg, inplace=True)
+    
     return df
 
 if __name__ == "__main__":
