@@ -26,7 +26,9 @@ def makeArr(file):
     return arr          
         
 def findMean(arr):
-    pass
+    mean = arr.sum(axis = 0)/arr.shape[0]
+    return mean
+    
 
 def rangeNorm(arr):
     minimum = arr.min()
@@ -52,5 +54,6 @@ with open('auto-mpg.data', 'r') as file:
     print(data)
     print(rangeNorm(data))
     print(standNorm(data))
+    print(findMean(data))
 
 
