@@ -23,6 +23,13 @@ def variance(arr: np.ndarray):
     for i in range(len(arr)):
         total += (arr[i] - (arr))**2
     return total * x
+
+def standardDeviation(arr: np.ndarray):
+    x = 1/(len(arr) - 1)
+    total = 0
+    for i in range(len(arr)):
+        total += (arr[i] - (arr))**2
+    return np.sqrt(x*total)
     
 # Computes the sample covariance of two numpy arrays
 def sample_covariance(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:
@@ -36,7 +43,7 @@ def sample_covariance(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:
 
 # Computes the correlation coefficient of two numpy arrays
 def correlation(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:
-    return np.corrcoef(arr1, arr2)[0][1]
+    return sample_covariance(arr1, arr2)/(standardDeviation(arr1) * standardDeviation(arr2))
 
 # Loads the data into a Panda's dataframe, sets column names,
 def get_data() -> pd.DataFrame:
