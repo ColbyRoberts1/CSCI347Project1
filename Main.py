@@ -51,8 +51,9 @@ def standNorm(arr):
 with open('auto-mpg.data', 'r') as file:
     data = makeArr(file)
     print(data)
-    print(rangeNorm(data))
-    print(standNorm(data))
-    print(findMean(data))
+    print(np.std(data, axis=0))
+    print(np.mean(data, axis=0))
+    #print(standNorm(data))
+    #print(findMean(data))
 
 

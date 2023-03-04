@@ -69,23 +69,23 @@ def get_data() -> pd.DataFrame:
 def covarianceMatrix(arr):
     arrSize = np.size(arr, 1)
     covarMatrix = np.zeros((arrSize, arrSize))
-    for row in range(len(covarMatrix)):
-        for col in range(len(covarMatrix)):
-            if row == col:
-                covarMatrix[col][row] = variance(arr.iloc[:, col])
+    for x, col in enumerate(arr.columns):
+        for y, row in enumerate(arr.columns):
+            if col == row:
+                covarMatrix[x][y] = variance(arr[col])
             else:
-                covarMatrix[col][row] = sample_covariance(arr.iloc[:, col], arr.iloc[:, row])
+                covarMatrix[x][y] = sample_covariance(arr[col], arr[row])
     return covarMatrix
 
 # Computes the standard Normalized matrix
 def standardNormalization(arr):
     for i, col in enumerate(arr.columns):
         currCol = arr[col]
-        #stdDev = standardDeviation(currCol)
-        #colMean = mean(currCol)
         arr[col] = ((currCol - mean(currCol))/standardDeviation(currCol))
     return arr
 
+
+# Computes the range Normalized matrix
 def rangeNormalization(arr):
     for i, col in enumerate(arr.columns):
         minimum = arr[col].min()
