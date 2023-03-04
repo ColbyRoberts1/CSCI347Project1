@@ -50,7 +50,6 @@ def correlation(arr1: np.ndarray, arr2: np.ndarray) -> np.float64:
 def total_variance(arr: pd.DataFrame) -> np.float64:
     total_variance = 0
     for col in arr.columns:
-        print(arr[col])
         total_variance += variance(arr[col].array)
     return total_variance
 
