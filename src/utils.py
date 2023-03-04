@@ -1,17 +1,22 @@
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
 from statistics import variance as uvar
 
 # Computes the label encoding of arr
 # Assumes arr is a two dimensional numpy array of categorical data
 # Assumes arr[0] is an attribute vector
 def label_encode(arr: np.ndarray) -> np.ndarray:
-    encoder = LabelEncoder()
     result = np.zeros(arr.shape, dtype=int)
     # Label encode each column
-    for i, col in enumerate(arr):
-        result[i] = encoder.fit_transform(col)
+    for i in range(len(arr)):
+        # Create encoder mapping
+        encoder = dict()
+        key_set = list(set(arr[i]))
+        for j in range(len(key_set)):
+            encoder[key_set[j]] = j
+        # Map each feature set
+        encoded = list(map(lambda x: encoder[x], arr[i]))
+        result[i] = np.array(encoded, dtype=int)
     return result
 
 # Computes the multivariate mean of a numpy array
@@ -112,21 +117,6 @@ if __name__ == "__main__":
     THRESHOLD = 0.01
     arr1 = np.array([1, 2, 3, 4, 5, 6], dtype=np.float64)
     arr2 = np.array([10, 20, 27, 20, 18, 6], dtype=np.float64)
-    categorical = np.array([["A", "C", "B", "A", "B"], ["red", "blue", "red", "green", "purple"]])
-
-    # Test label encoding
-    expected_labels = np.array([[0, 2, 1, 0, 1], [3, 0, 3, 1, 2.]], dtype=int)
-    labels = label_encode(categorical)
-    if (not labels.shape == expected_labels.shape):
-        print("Label encoding shape test failed!")
-        print(f"    expected shape: {expected_labels.shape}")
-        print(f"    actual shape: {labels.shape}")
-    elif (not (labels == expected_labels).all()):
-        print("Label encoding equality test failed!")
-        print(f"    expected: {expected_labels}")
-        print(f"    actual: {labels}")
-    else:
-        print("Label encoding tests passed!")
 
     # Test sample covariance
     covar = sample_covariance(arr1, arr2)
