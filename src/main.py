@@ -1,8 +1,6 @@
 from dataclasses import dataclass
-
-import numpy as np
 import pandas as pd
-from utils import get_data, get_prepared_data, sample_covariance, mean, covarianceMatrix, standardNormalization, rangeNormalization
+from utils import get_prepared_data, sample_covariance, mean, total_variance, variance, covarianceMatrix, standardNormalization, rangeNormalization
 
 @dataclass
 class Comparison:
@@ -44,6 +42,20 @@ def report():
     print(rangeNormalization(df))
     print()
 
+    # What is the total variance of the data?
+    calculated_variance = total_variance(df)
+    print("What is the total variance of the data?")
+    print("Answer:", calculated_variance)
+    print()
+
+    # What is the total variance of the data, restricted to the five features 
+    # that have the greatest sample variance?
+    top_variance_df = get_top_variance_cols(df, 5)
+    calculated_variance_five = total_variance(top_variance_df)
+    print("What is the total variance of the data, restricted to the five features that have the greatest sample variance?")
+    print("Answer:", calculated_variance_five)
+    print()
+
 def calc_matching_pairs_for_threshold(df: pd.DataFrame, comparison: Comparison) -> int:
     matches = 0
     # Use each feature set once
@@ -62,6 +74,15 @@ def calc_matching_pairs_for_threshold(df: pd.DataFrame, comparison: Comparison) 
                 if sample_covariance(arr1, arr2) < comparison.threshold:
                     matches += 1
     return matches
+
+def get_top_variance_cols(df: pd.DataFrame, n: int) -> pd.DataFrame:
+    variances = []
+    for col in df.columns:
+        vari = variance(df[col].array)
+        variances.append((vari, col))
+    sorted_variances = sorted(variances, key=lambda x: x[0], reverse=True)[:n]
+    top_cols = list(map(lambda x: x[1], sorted_variances))
+    return df.filter(top_cols, axis="columns")
 
 if __name__ == '__main__':
     report()
