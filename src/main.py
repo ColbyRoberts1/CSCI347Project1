@@ -30,6 +30,7 @@ def report():
     print("Answer:", matches_found)
     print()
     
+    # What is the covariance matrix of the numerical data matrix (where categorical data  have been converted to numerical values)?
     print("Covariance Matrix:")
     print(covarianceMatrix(df))
     print()
@@ -41,6 +42,14 @@ def report():
     print("Range Normalized Matrix:")
     print(rangeNormalization(df))
     print()
+    
+    df_cov = rangeNormalization(df)
+    coord = np.where(df_cov == np.amax(df_cov))
+    print("Which range-normalized numerical attributes have the greatest sample covariance?")
+    print("Answer:", cars_num.columns[coord[0]], cars_num.columns[coord[1]], '\n')
+    
+    print("What is their sample covariance?")
+    print("Answer:", np.amax(df_cov), '\n')
 
     # What is the total variance of the data?
     calculated_variance = total_variance(df)
