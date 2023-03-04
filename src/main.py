@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-import numpy as np
 import pandas as pd
 from utils import get_prepared_data, sample_covariance, mean, total_variance, variance
 
@@ -14,8 +13,9 @@ def report():
     # Dataset initialization
     df = get_prepared_data()
     
+    # What is the multivariate mean of the numerical data matrix (where categorical data  have been converted to numerical values)?
     print("What is the multivariate mean of the dataset?")
-    print("Answer:", mean(df))
+    print("Answer:", (list(mean(df))))
     print()
 
     # How many pairs of features have correlation greater than or equal to 0.5?
@@ -29,6 +29,9 @@ def report():
     print("How many pairs of features have negative sample covariance?")
     print("Answer:", matches_found)
     print()
+    
+    print("Covariance Matrix:")
+    print(covarianceMatrix(df))
 
     # What is the total variance of the data?
     calculated_variance = total_variance(df)

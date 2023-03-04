@@ -24,6 +24,7 @@ def variance(arr: np.ndarray) -> np.float64:
         total += (arr[i] - mean(arr))**2
     return total / (len(arr) - 1)
 
+# Computes the standard deviation of a numpy array
 def standardDeviation(arr: np.ndarray):
     x = 1/(len(arr) - 1)
     total = 0
@@ -63,6 +64,19 @@ def get_data() -> pd.DataFrame:
     # Correct the datatype of Displacement
     df["Displacement"] = df["Displacement"].astype(float)
     return df
+
+# Computes and returns the covariance matrix
+def covarianceMatrix(arr):
+    arrSize = np.size(arr, 1)
+    covarMatrix = np.zeros((arrSize, arrSize))
+    for row in range(len(covarMatrix)):
+        for col in range(len(covarMatrix)):
+            if row == col:
+                covarMatrix[col][row] = variance(arr.iloc[:, col])
+            else:
+                covarMatrix[col][row] = sample_covariance(arr.iloc[:, col], arr.iloc[:, row])
+    return covarMatrix
+
 
 # Loads and prepares the dataset
 def get_prepared_data():
