@@ -31,7 +31,7 @@ def standardDeviation(arr: np.ndarray):
     x = 1/(len(arr) - 1)
     total = 0
     for i in range(len(arr)):
-        total += (arr[i] - (arr))**2
+        total += (arr[i] - mean(arr))**2
     return np.sqrt(x*total)
     
 # Computes the sample covariance of two numpy arrays
@@ -71,6 +71,21 @@ def covarianceMatrix(arr):
                 covarMatrix[col][row] = sample_covariance(arr.iloc[:, col], arr.iloc[:, row])
     return covarMatrix
 
+# Computes the standard Normalized matrix
+def standardNormalization(arr):
+    for i, col in enumerate(arr.columns):
+        currCol = arr[col]
+        #stdDev = standardDeviation(currCol)
+        #colMean = mean(currCol)
+        arr[col] = ((currCol - mean(currCol))/standardDeviation(currCol))
+    return arr
+
+def rangeNormalization(arr):
+    for i, col in enumerate(arr.columns):
+        minimum = arr[col].min()
+        maximum = arr[col].max()
+        arr[col] = (arr[col] - minimum)/(maximum - minimum)
+    return arr
 
 # Loads and prepares the dataset
 def get_prepared_data():

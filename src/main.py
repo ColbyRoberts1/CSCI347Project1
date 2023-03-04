@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
-from utils import get_data, get_prepared_data, sample_covariance, mean, covarianceMatrix
+from utils import get_data, get_prepared_data, sample_covariance, mean, covarianceMatrix, standardNormalization, rangeNormalization
 
 @dataclass
 class Comparison:
@@ -34,6 +34,15 @@ def report():
     
     print("Covariance Matrix:")
     print(covarianceMatrix(df))
+    print()
+    
+    print("Standard Normalized Matrix:")
+    print(standardNormalization(df))
+    print()
+    
+    print("Range Normalized Matrix:")
+    print(rangeNormalization(df))
+    print()
 
 def calc_matching_pairs_for_threshold(df: pd.DataFrame, comparison: Comparison) -> int:
     matches = 0
