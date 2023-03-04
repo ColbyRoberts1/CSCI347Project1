@@ -42,6 +42,11 @@ def report():
     print("Range Normalized Matrix:")
     print(rangeNormalization(df))
     print()
+    
+    df_cov = rangeNormalization(df)
+    coord = np.where(df_cov == np.amax(df_cov))
+    print("Which range-normalized numerical attributes have the greatest sample covariance?")
+    print("Answer:", cars_num.columns[coord[0]], cars_num.columns[coord[1]], '\n')
 
     # What is the total variance of the data?
     calculated_variance = total_variance(df)
