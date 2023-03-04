@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import pandas as pd
-from utils import get_prepared_data, sample_covariance, mean, total_variance, variance
+from utils import get_prepared_data, sample_covariance, mean, total_variance, variance, covarianceMatrix
 
 @dataclass
 class Comparison:
