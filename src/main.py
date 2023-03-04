@@ -30,6 +30,7 @@ def report():
     print("Answer:", matches_found)
     print()
     
+    # What is the covariance matrix of the numerical data matrix (where categorical data  have been converted to numerical values)?
     print("Covariance Matrix:")
     print(covarianceMatrix(df))
     print()
